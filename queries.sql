@@ -4,7 +4,8 @@ SELECT * from animals WHERE name = 'Luna';
 
 /* first query, to select all names ending in mon */
 
-vet_clinic=# SELECT * FROM animals WHERE name LIKE '%mon';
+SELECT * FROM animals WHERE name LIKE '%mon';
+
  id |  name   | date_of_birth | escape_attempts | neutered | weight_kg
 ----+---------+---------------+-----------------+----------+-----------
   1 | Agumon  | 2020-02-03    |               0 | t        |     10.23
@@ -14,8 +15,9 @@ vet_clinic=# SELECT * FROM animals WHERE name LIKE '%mon';
 
 /* second query, selects names of animals between given dates */
 
-vet_clinic=# SELECT name FROM animals
-vet_clinic-# WHERE date_of_birth BETWEEN '2016-01-01' AND '2019-12-31';
+SELECT name FROM animals
+WHERE date_of_birth BETWEEN '2016-01-01' AND '2019-12-31';
+
   name
 ---------
  Gabumon
@@ -24,8 +26,9 @@ vet_clinic-# WHERE date_of_birth BETWEEN '2016-01-01' AND '2019-12-31';
 
 /* third query , select names of animals who are neutered and have escape attempts less than 3 */
 
-vet_clinic=# SELECT name FROM animals
-vet_clinic-# WHERE neutered = true AND escape_attempts < 3;
+ SELECT name FROM animals
+ WHERE neutered = true AND escape_attempts < 3;
+
   name
 ---------
  Agumon
@@ -35,8 +38,9 @@ vet_clinic-# WHERE neutered = true AND escape_attempts < 3;
 /* fourth query, selects date of birth of animals who are agumon and Pikachu*/
 
                                                               ^
-vet_clinic=# SELECT date_of_birth FROM animals
-vet_clinic-# WHERE name IN ('Agumon', 'Pikachu');
+SELECT date_of_birth FROM animals
+ WHERE name IN ('Agumon', 'Pikachu');
+
  date_of_birth
 ---------------
  2020-02-03
@@ -46,7 +50,8 @@ vet_clinic-# WHERE name IN ('Agumon', 'Pikachu');
 /* fifth query, select name and number of escape attempts who have weight more than 10.5 kg */
 
 
-vet_clinic=# select name, escape_attempts from animals where weight_kg > 10.5;
+ select name, escape_attempts from animals where weight_kg > 10.5;
+
   name   | escape_attempts
 ---------+-----------------
  Pikachu |               1
@@ -56,7 +61,8 @@ vet_clinic=# select name, escape_attempts from animals where weight_kg > 10.5;
 /* sixth query, select all animals who are neutered */
 
 
-vet_clinic=# select * from animals where neutered = true;
+ select * from animals where neutered = true;
+
  id |  name   | date_of_birth | escape_attempts | neutered | weight_kg
 ----+---------+---------------+-----------------+----------+-----------
   1 | Agumon  | 2020-02-03    |               0 | t        |     10.23
@@ -67,8 +73,9 @@ vet_clinic=# select * from animals where neutered = true;
 /* seventh  query, select all animals who are not Gabumon */
 
 
-vet_clinic=# SELECT * FROM animals
-vet_clinic-# WHERE name != 'Gabumon';
+ SELECT * FROM animals
+ WHERE name != 'Gabumon';
+
  id |  name   | date_of_birth | escape_attempts | neutered | weight_kg
 ----+---------+---------------+-----------------+----------+-----------
   1 | Agumon  | 2020-02-03    |               0 | t        |     10.23
@@ -77,7 +84,8 @@ vet_clinic-# WHERE name != 'Gabumon';
 (3 rows)
 
 /* eighth query, selects all animals whose weight are more than or equal to 10.4 kg and lighter than or equal to 17.3 kg */
-vet_clinic=# select * from animals WHERE weight_kg >= 10.4 AND weight_kg <= 17.3;
+ select * from animals WHERE weight_kg >= 10.4 AND weight_kg <= 17.3;
+
  id |  name   | date_of_birth | escape_attempts | neutered | weight_kg
 ----+---------+---------------+-----------------+----------+-----------
   3 | Pikachu | 2021-01-07    |               1 | f        |     15.04
