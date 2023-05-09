@@ -10,5 +10,12 @@ CREATE TABLE animals (
   escape_attempts   INT,
   neutered          bool,
   weight_kg         decimal(4,2),
-  PRIMARY KEY(id)
+  PRIMARY KEY(id),
 );
+
+/* alter table animals add new column speceies */
+
+ALTER TABLE animals
+ADD species varchar(10);
+
+
