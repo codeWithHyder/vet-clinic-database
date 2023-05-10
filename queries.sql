@@ -54,35 +54,50 @@ SELECT date_of_birth FROM animals
  select * from animals WHERE weight_kg >= 10.4 AND weight_kg <= 17.3;
 
 /* Transactions */
-/*   update the animals table by setting the species column to unspecified */
-  update animals set species='unspecified';
-/*  Update the animals table by setting the species column to digimon for all animals that have a name ending in mon */
-update animals set species = 'digimon' where name like '%mon';
+
+ BEGIN; -- start transaction
+
+  UPDATE animals
+  SET species = 'unspecified'; -- make change
+
+  SELECT species from animals; -- verify that change was made
+  ROLLBACK;
+
+  SELECT species from animals; -- verify that change was undone
+/* transaction */
+ BEGIN;
+   UPDATE animals SET species = 'digimon' WHERE name LIKE '%mon'; 
+   UPDATE animals SET species = 'pokemon' WHERE species IS NULL; 
+
+   SELECT species from animals; -- verify that change was made
+   COMMIT;
+   SELECT species from animals; -- verify that change persists after commit
+
 /*  Update the animals table by setting the species column to pokemon for all animals that don't have species already set. */
 update animals set species = 'pokemon' where species <> 'digimon';
 /*   Verify that changes were made */
 select * from animals;
-/*  delete all records in the animals table, then roll back the transaction. */
- delete from animals;
- /* rollback */
- rollback;
- /* verify if all records are back after rollback */
- select * from animals;
 
+/* transaction */
+  BEGIN;
 
- /* Delete all animals born after Jan 1st, 2022 */
- delete from animals where date_of_birth > '2022-01-01';
- /* Create a savepoint for the transaction */
-  savepoint savepoint_weight1;
-  /*Update all animals' weight to be their weight multiplied by -1. */
-  update animals set weight_kg = weight_kg * -1;
-  /* Rollback to the savepoint */
-  rollback to savepoint_weight1;
-  /* Update all animals' weights that are negative to be their weight multiplied by -1. */
-  update animals set weight_kg = weight_kg * -1 where weight_kg < 0;
+   DELETE FROM animals WHERE ;
+   SELECT COUNT(*) FROM ANIMALS;
 
-  /* Commit transaction */
-  commit;
+   ROLLBACK;
+   SELECT COUNT(*) FROM ANIMALS;
+
+   /* transaction */
+   BEGIN;
+
+    DELETE FROM animals WHERE  date_of_birth > '2022/01/01' ;
+    SAVEPOINT SP1;
+
+    UPDATE animals SET weight_kg = weight_kg * -1; 
+    ROLLBACK TO SP1;
+    UPDATE animals SET weight_kg = weight_kg * -1 WHERE weight_kg < 0; 
+
+    COMMIT;
 
 
   /* How many animals are there? */
@@ -93,7 +108,7 @@ select * from animals;
   select avg(weight_kg) from animals;
   /* Who escapes the most, neutered or not neutered animals? */
   
-SELECT neutered, SUM(escape_attempts) AS total_escape_attempts
+SELECT neutered, MAX(escape_attempts) AS total_escape_attempts
 FROM animals
 GROUP BY neutered;
 
