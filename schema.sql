@@ -52,3 +52,29 @@ name: string*/
  alter table animals
  add owner_id int ,
  add foreign key(owner_id) references owners(id);
+
+
+ -- 4th day project 
+-- Create table vets
+CREATE TABLE  vets (
+  id int GENERATED ALWAYS AS IDENTITY,
+  name varchar(60),
+  age int,
+  date_of_graduation date,
+  primary key(id)
+);
+
+--create specializations table
+CREATE TABLE specializations (
+  id int primary key GENERATED ALWAYS AS IDENTITY,
+  species_id int REFERENCES species(id),
+  vets_id int REFERENCES vets(id) 
+);
+
+-- Create table visits
+CREATE TABLE visits (
+  id int primary key GENERATED ALWAYS AS IDENTITY,
+  animals_id int REFERENCES animals(id),
+  vets_id int REFERENCES vets(id),
+  visit_date date
+);
