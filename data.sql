@@ -33,3 +33,62 @@ insert into animals (name, date_of_birth, escape_attempts, neutered, weight_kg) 
 /*His name is Ditto. He was born on May 14th, 2022, and currently weighs 22kg. He is neutered and he has tried to escape 4 times.  */
 insert into animals (name, date_of_birth, escape_attempts, neutered, weight_kg) values ( 'Ditto', '2022-05-14', 4, true, 22.00); 
 
+/* insertions into owners table */
+
+/* insert Sam Smith 34 years old on owners table */
+insert into owners ( full_name, age) values ('Sam Smith', 34);
+/* insert Jennifer Orwell 19 years old. */
+insert into owners ( full_name, age) values ('Jennifer Orwell', 19);
+/* insert Bob 45 years old */
+ insert into owners ( full_name, age) values ('Bob ', 45);
+/* insert  Melody Pond 77 years old */
+insert into owners ( full_name, age) values ('Melody Pond ', 77);
+/* insert Dean Winchester 14 years old. */
+insert into owners ( full_name, age) values ('Dean Winchester', 14);
+/* insert Jodie Whittaker 38 years old. */
+ insert into owners ( full_name, age) values ('Jodie Whittaker', 38);
+
+
+/* insertions into species table */
+
+/* insert pokemon and Digimon */
+insert into species(name) values ('Pokemon'),('Digimon');
+
+
+/* modification of inserted animals species */
+BEGIN WORK;
+update animals SET species_id = 1 WHERE name NOT LIKE '%mon'; 
+update animals SET species_id = 2 WHERE name LIKE '%mon';
+COMMIT WORK;
+
+
+/* modification of inserted animals owners */
+BEGIN WORK;
+-- Sam Smith owns Agumon
+update animals SET owner_id = owners.id 
+FROM owners 
+WHERE animals.name='Agumon' AND owners.full_name='Sam Smith';
+
+-- Jennifer Orwell owns Gabumon and Pikachu
+update animals SET owner_id = owners.id 
+FROM owners 
+WHERE (owners.full_name='Jennifer Orwell') AND (animals.name='Gabumon' OR animals.name='Pikachu');
+
+-- Bob owns Devimon and Plantmon
+update animals SET owner_id = owners.id 
+FROM owners 
+WHERE (owners.full_name='Bob') AND (animals.name='Devimon' OR animals.name='Plantmon');
+
+-- Melody Pond owns Charmander, Squirtle, and Blossom
+update animals SET owner_id = owners.id 
+FROM owners 
+WHERE (owners.full_name='Melody Pond') 
+AND (animals.name='Charmander' OR animals.name='Squirtle' OR animals.name='Blossom');
+
+-- Dean Winchester owns Angemon and Boarmon
+update animals SET owner_id = owners.id 
+FROM owners 
+WHERE (owners.full_name='Dean Winchester') AND (animals.name='Angemon' OR animals.name='Boarmon');
+
+COMMIT WORK;
+
