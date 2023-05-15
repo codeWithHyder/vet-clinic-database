@@ -48,13 +48,13 @@ name: string*/
  add  species_id int,
  add foreign key(species_id) references species(id);
 
- /* Add column owner_id which is a foreign key referencing the owners table  */ 
+ /* Add column owner_id which is a foreign key referencing the owners table  */
  alter table animals
  add owner_id int ,
  add foreign key(owner_id) references owners(id);
 
 
- -- 4th day project 
+ -- 4th day project
 -- Create table vets
 CREATE TABLE  vets (
   id int GENERATED ALWAYS AS IDENTITY,
@@ -68,7 +68,7 @@ CREATE TABLE  vets (
 CREATE TABLE specializations (
   id int primary key GENERATED ALWAYS AS IDENTITY,
   species_id int REFERENCES species(id),
-  vets_id int REFERENCES vets(id) 
+  vets_id int REFERENCES vets(id)
 );
 
 -- Create table visits
@@ -84,5 +84,6 @@ CREATE TABLE visits (
 ALTER TABLE owners ADD COLUMN email VARCHAR(120);
 
  CREATE INDEX visit_index_desc on visits(animals_id desc );
+ CREATE INDEX vets_id_DESC ON visitS(vets_id DESC);
 
 

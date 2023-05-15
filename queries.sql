@@ -6,7 +6,7 @@ SELECT * from animals WHERE name = 'Luna';
 
 SELECT * FROM animals WHERE name LIKE '%mon';
 
- 
+
 
 /* second query, selects names of animals between given dates */
 
@@ -19,7 +19,7 @@ WHERE date_of_birth BETWEEN '2016-01-01' AND '2019-12-31';
  SELECT name FROM animals
  WHERE neutered = true AND escape_attempts < 3;
 
- 
+
 
 /* fourth query, selects date of birth of animals who are agumon and Pikachu*/
 
@@ -27,14 +27,14 @@ WHERE date_of_birth BETWEEN '2016-01-01' AND '2019-12-31';
 SELECT date_of_birth FROM animals
  WHERE name IN ('Agumon', 'Pikachu');
 
- 
+
 
 /* fifth query, select name and number of escape attempts who have weight more than 10.5 kg */
 
 
  select name, escape_attempts from animals where weight_kg > 10.5;
 
- 
+
 
 /* sixth query, select all animals who are neutered */
 
@@ -66,8 +66,8 @@ SELECT date_of_birth FROM animals
   SELECT species from animals; -- verify that change was undone
 /* transaction */
  BEGIN;
-   UPDATE animals SET species = 'digimon' WHERE name LIKE '%mon'; 
-   UPDATE animals SET species = 'pokemon' WHERE species IS NULL; 
+   UPDATE animals SET species = 'digimon' WHERE name LIKE '%mon';
+   UPDATE animals SET species = 'pokemon' WHERE species IS NULL;
 
    SELECT species from animals; -- verify that change was made
    COMMIT;
@@ -93,9 +93,9 @@ select * from animals;
     DELETE FROM animals WHERE  date_of_birth > '2022/01/01' ;
     SAVEPOINT SP1;
 
-    UPDATE animals SET weight_kg = weight_kg * -1; 
+    UPDATE animals SET weight_kg = weight_kg * -1;
     ROLLBACK TO SP1;
-    UPDATE animals SET weight_kg = weight_kg * -1 WHERE weight_kg < 0; 
+    UPDATE animals SET weight_kg = weight_kg * -1 WHERE weight_kg < 0;
 
     COMMIT;
 
@@ -104,16 +104,16 @@ select * from animals;
   select count(id) from animals;
   /* How many animals have never tried to escape? */
    select * from animals where escape_attempts = 0;
-  /*  What is the average weight of animals? */ 
+  /*  What is the average weight of animals? */
   select avg(weight_kg) from animals;
   /* Who escapes the most, neutered or not neutered animals? */
-  
+
 SELECT neutered, MAX(escape_attempts) AS total_escape_attempts
 FROM animals
 GROUP BY neutered;
 
 /* What is the minimum and maximum weight of each type of animal? */
-SELECT species, MIN(weight_kg) AS min_weight, Max(weight_kg) AS max_weight 
+SELECT species, MIN(weight_kg) AS min_weight, Max(weight_kg) AS max_weight
 FROM animals
 GROUP By species;
 
@@ -128,7 +128,7 @@ GROUP By species;
 /* Join Queries */
 
 -- What animals belong to Melody Pond
-SELECT * FROM animals JOIN owners ON owners.id = animals.owner_id AND owners.full_name='Melody Pond'; 
+SELECT * FROM animals JOIN owners ON owners.id = animals.owner_id AND owners.full_name='Melody Pond';
 
 
 -- List of all animals that are pokemon (their type is Pokemon)
@@ -138,18 +138,18 @@ SELECT * FROM animals JOIN species ON species.id = animals.species_id AND specie
 SELECT full_name , name From owners Left JOIN animals ON animals.owner_id=owners.id;
 
 -- How many animals are there per species?
-SELECT species.name , COUNT(animals.name) AS Animals_Number 
-From species 
+SELECT species.name , COUNT(animals.name) AS Animals_Number
+From species
 JOIN animals ON species.id=animals.species_id
-GROUP BY species.name; 
+GROUP BY species.name;
 
 -- List all Digimon owned by Jennifer Orwell
-SELECT animals.name, owners.full_name 
-from animals 
-JOIN owners 
+SELECT animals.name, owners.full_name
+from animals
+JOIN owners
 ON (animals.owner_id=owners.id AND owners.full_name = 'Jennifer Orwell')
 JOIN species
-ON (animals.species_id=species.id AND species.name='Digimon'); 
+ON (animals.species_id=species.id AND species.name='Digimon');
 
 -- List all animals owned by Dean Winchester that haven't tried to escape
 SELECT owners.full_name, animals.name
@@ -163,21 +163,21 @@ SELECT owners.full_name , COUNT(animals.name) AS Animals_Number
 From owners
 JOIN animals ON owners.id=animals.owner_id
 GROUP BY owners.full_name
-ORDER BY Animals_Number DESC; 
+ORDER BY Animals_Number DESC;
 
 
 /* queries project 4th day */
 
 --Who was the last animal seen by William Tatcher?
-SELECT animals.name,visits.visit_date 
-FROM animals,vets,visits 
-WHERE vets.name = 'William Tatcher' 
-AND vets.id = visits.vets_id 
+SELECT animals.name,visits.visit_date
+FROM animals,vets,visits
+WHERE vets.name = 'William Tatcher'
+AND vets.id = visits.vets_id
 AND animals.id = visits.animals_id
 ORDER BY visits.visit_date DESC LIMIT 1;
 
 -- How many different animals did Stephanie Mendez see?
-SELECT vets.name, COUNT(DISTINCT (animals.id)) 
+SELECT vets.name, COUNT(DISTINCT (animals.id))
 FROM vets, animals, visits
 WHERE vets.name = 'Stephanie Mendez'
 AND vets.id = visits.vets_id
@@ -185,7 +185,7 @@ AND animals.id = visits.animals_id
 GROUP BY vets.name;
 
 -- List all vets and their specialties, including vets with no specialties
-SELECT vets.name,species.name  
+SELECT vets.name,species.name
 FROM vets
 LEFT JOIN specializations
 ON vets.id = specializations.vets_id
@@ -194,8 +194,8 @@ ON species.id = specializations.species_id
 ORDER BY vets.id;
 
 --List all animals that visited Stephanie Mendez between April 1st and August 30th, 2020.
-SELECT animals.name,visits.visit_date 
-FROM animals,vets,visits 
+SELECT animals.name,visits.visit_date
+FROM animals,vets,visits
 WHERE vets.name = 'Stephanie Mendez'
 AND vets.id = visits.vets_id
 AND animals.id = visits.animals_id
@@ -203,7 +203,7 @@ AND visits.visit_date BETWEEN '2020,04,01'::date AND '2020,08,30'::date
 ORDER BY visits.visit_date;
 
 --What animal has the most visits to vets?
-SELECT animals.name, COUNT(visits.animals_id) 
+SELECT animals.name, COUNT(visits.animals_id)
 from animals,visits
 WHERE animals.id = visits.animals_id
 GROUP BY animals.name,visits.animals_id
@@ -229,7 +229,7 @@ species.name AS animal_species,
 vets.name AS vet_name,
 vets.age AS vet_age,
 vets.date_of_graduation AS vey_graduation_date,
-visits.visit_date 
+visits.visit_date
 From animals,vets,visits,species
 WHERE animals.id = visits.animals_id
 AND animals.species_id = species.id
@@ -253,9 +253,10 @@ AND visits.animals_id = animals.id
 AND animals.species_id = species.id
 GROUP BY vet_name, species_name
 ORDER BY number_visits DESC
-LIMIT 1; 
+LIMIT 1;
 
 /* day 4 project performance audit week 2 */
 
 EXPLAIN ANALYZE SELECT COUNT(*) FROM visits where animals_id = 4;
+EXPLAIN ANALYZE SELECT COUNT(*) FROM visits where VETS_id = 2;
 
