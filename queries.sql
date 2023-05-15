@@ -254,3 +254,8 @@ AND animals.species_id = species.id
 GROUP BY vet_name, species_name
 ORDER BY number_visits DESC
 LIMIT 1; 
+
+/* day 4 project performance audit week 2 */
+
+EXPLAIN ANALYZE SELECT COUNT(*) FROM visits where animals_id = 4;
+

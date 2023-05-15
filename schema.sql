@@ -78,3 +78,11 @@ CREATE TABLE visits (
   vets_id int REFERENCES vets(id),
   visit_date date
 );
+
+/*  day 4 project performance  audit  in week 2 */
+-- Add an email column to your owners table
+ALTER TABLE owners ADD COLUMN email VARCHAR(120);
+
+ CREATE INDEX visit_index_desc on visits(animals_id desc );
+
+
