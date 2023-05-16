@@ -85,4 +85,8 @@ ALTER TABLE owners ADD COLUMN email VARCHAR(120);
 
  CREATE INDEX visit_index_desc on visits(animals_id desc );
 
+ /* vet_clinic database schema dia gram */
+
+ Blank diagram.png
+
 
