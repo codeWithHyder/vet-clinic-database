@@ -7,6 +7,8 @@
   <img src="https://d1q6f0aelx0por.cloudfront.net/product-logos/library-postgres-logo.png" alt="logo" width="140"  height="auto" />
   <br/>
 
+   <img src="./vetclinic_database.png" alt="logo" width="400"  height="auto" />
+
 
 
 </div>
